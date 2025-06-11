@@ -231,7 +231,7 @@ class QueueJob(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        if self.env.context.get("_job_edit_sentinel") is not self.EDIT_SENTINEL:
+        if vals_list and self.env.context.get("_job_edit_sentinel") is not self.EDIT_SENTINEL:
             # Prevent to create a queue.job record "raw" from RPC.
             # ``with_delay()`` must be used.
             raise exceptions.AccessError(
